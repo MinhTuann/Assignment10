@@ -274,138 +274,106 @@ public class JWhiteBoard extends ReceiverAdapter implements ActionListener, Chan
     public void go() throws Exception {
         if(!noChannel && !useState)
             channel.connect(groupName);//So many changed
-        //mainFrame
-        mainFrame=new JFrame();
-        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.setLayout(null);
-        
-        //groupPanel
-        groupPanel=new JPanel();
-        groupPanel.setBackground(Color.LIGHT_GRAY);
-        groupPanel.setLayout(null);
-        
-        txtGroup= new TextField();
-        joinButton=new JButton("Join");
-        joinButton.setFont(defaultFont);
-        joinButton.addActionListener(this);
-        groupLabel=new JLabel("Group Name:");
-        
-        groupPanel.add(txtGroup);
-        groupPanel.add(joinButton);
-        groupPanel.add(groupLabel);
-        
-        groupLabel.setBounds(330, 20, 100, 25);
-        txtGroup.setBounds(430, 20, 150, 25);
-        joinButton.setBounds(580, 20, 80, 25);
-        
-        mainFrame.getContentPane().add(groupPanel);
-        groupPanel.setBounds(0, 0, 1000, 65);
-        
-        //drawPanel
-        drawPanel=new DrawPanel(useState);
-        drawPanel.setBackground(backgroundColor);
-        mainFrame.getContentPane().add(drawPanel);
-        drawPanel.setBounds(0, 65, 620, 400);
-        
-        //messagePanel
-        messagePanel=new JPanel();
-        messagePanel.setBackground(messageColor);
-        messagePanel.setLayout(null);
-        txaMessage=new TextArea();
-        scroll=new JScrollPane(txaMessage);
-        txtSend=new TextField();
-        sendButton=new JButton("Send");
-        sendButton.setFont(defaultFont);
-        sendButton.addActionListener(this);
-        
-        messagePanel.add(txaMessage);
-        messagePanel.add(scroll);
-        messagePanel.add(txtSend);
-        messagePanel.add(sendButton);
-        
-        scroll.setBounds(10, 10, 360, 420);
-        txtSend.setBounds(10, 450, 290, 25);
-        sendButton.setBounds(300, 450, 75, 25);
-        
-        mainFrame.getContentPane().add(messagePanel);
-        messagePanel.setBounds(620, 65, 380, 500);
-        
-        //subPanel
-        subPanel=new JPanel();
-        subPanel.setLayout(null);
-        
-        clearButton=new JButton("Clear");
-        clearButton.setFont(defaultFont);
-        clearButton.addActionListener(this);
-        leaveButton=new JButton("Leave");
-        leaveButton.setFont(defaultFont);
-        leaveButton.addActionListener(this);
-        brushButton=new JButton("Brush");
-        brushButton.setFont(defaultFont);
-        brushButton.addActionListener(this);
-        backgroundButton=new JButton("Background");
-        backgroundButton.setFont(defaultFont);
-        backgroundButton.addActionListener(this);
-        colorButton1=new JButton("Color Brush");
-        colorButton1.setFont(defaultFont);
-        colorButton1.addActionListener(this);
-        colorButton1.setVisible(false);
-        colorButton2=new JButton("Color Background");
-        colorButton2.setFont(defaultFont);
-        colorButton2.addActionListener(this);
-        colorButton2.setVisible(false);
-        brushSize=new JLabel("Size");
-        BrSize = new JLabel("Choose Brush Size");
-        BrSize.setVisible(false);
-		BrPx = new JLabel("Px");
+        // mainFrame
+		mainFrame = new JFrame();
+		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		String[] sList = { "5", "10", "15","20", "25", "30" };//Size
+		txaMessage = new TextArea();
+		txaMessage.setEditable(false);
+		scroll = new JScrollPane(txaMessage);
+		
+		mainFrame.getContentPane().add(scroll, "West");
+
+		// drawPanel
+		drawPanel = new DrawPanel(useState);
+		drawPanel.setBackground(backgroundColor);
+		mainFrame.getContentPane().add(drawPanel, "Center");
+
+		// subPanel
+		subPanel = new JPanel();
+
+		clearButton = new JButton("Clear");
+		clearButton.setFont(defaultFont);
+		clearButton.addActionListener(this);
+		leaveButton = new JButton("Leave");
+		leaveButton.setFont(defaultFont);
+		leaveButton.addActionListener(this);
+		brushButton = new JButton("Brush");
+		brushButton.setFont(defaultFont);
+		brushButton.addActionListener(this);
+		backgroundButton = new JButton("Background");
+		backgroundButton.setFont(defaultFont);
+		backgroundButton.addActionListener(this);
+		colorButton1 = new JButton("Color Brush");
+		colorButton1.setFont(defaultFont);
+		colorButton1.addActionListener(this);
+		colorButton1.setVisible(false);
+		colorButton2 = new JButton("Color Background");
+		colorButton2.setFont(defaultFont);
+		colorButton2.addActionListener(this);
+		colorButton2.setVisible(false);
+		brushSize = new JLabel("Size");
+		BrSize = new JLabel("Choose Brush Size");
+		BrSize.setVisible(false);
+		BrPx = new JLabel("Px");
+
+		String[] sList = { "5", "10", "15", "20", "25", "30" };// Size
 		cmb = new JComboBox(sList);
+		cmb.setSelectedIndex(0);
+		cmb.addActionListener(this);
 		cmb.setVisible(false);
-        
-        subPanel.add(brushButton);
-        subPanel.add(backgroundButton);
-        subPanel.add(colorButton1);
-        subPanel.add(colorButton2);
-        subPanel.add(BrSize);
-        subPanel.add(cmb);
-        subPanel.add(clearButton);
-        subPanel.add(leaveButton);
-        
-        brushButton.setBounds(10, 20, 100, 25);
-        backgroundButton.setBounds(10, 60, 100, 25);
-        colorButton1.setBounds(110, 20, 140, 25);
-        colorButton2.setBounds(110, 60, 140, 25);
-        BrSize.setBounds(250, 20, 120, 25);
-        cmb.setBounds(370, 20, 80, 25);
-        clearButton.setBounds(510, 20, 100, 25);
-        leaveButton.setBounds(510, 60, 100, 25);
-        
-        mainFrame.getContentPane().add(subPanel);
-        subPanel.setBounds(0, 465, 620, 100);
-        mainFrame.setBackground(backgroundColor);
-        
-        //Color of Button
-        clearButton.setForeground(Color.blue);
-        leaveButton.setForeground(Color.blue);
-        brushButton.setForeground(Color.blue);
-        backgroundButton.setForeground(Color.blue);
-        colorButton1.setForeground(Color.blue);
-        colorButton2.setForeground(Color.blue);
-        //sendButton.setForeground(Color.blue);
-        BrPx.setForeground(Color.blue);
+		
+		txtSend = new TextField("", 18);
+		sendButton = new JButton("Send");
+		sendButton.setFont(defaultFont);
+		sendButton.addActionListener(this);
+		
+		txtGroup = new TextField("", 14);
+		joinButton = new JButton("Join");
+		joinButton.setFont(defaultFont);
+		joinButton.addActionListener(this);
+		groupLabel = new JLabel("Group Name:");
+
+		subPanel.add(txtSend);
+		subPanel.add(sendButton);
+		subPanel.add(groupLabel);
+		subPanel.add(txtGroup);
+		subPanel.add(joinButton);
+		subPanel.add(brushButton);
+		subPanel.add(backgroundButton);
+		subPanel.add(colorButton1);
+		subPanel.add(colorButton2);
+		subPanel.add(BrSize);
+		subPanel.add(cmb);
+		subPanel.add(clearButton);
+		subPanel.add(leaveButton);
+
+		mainFrame.getContentPane().add(subPanel, "South");
+		mainFrame.setBackground(backgroundColor);
+
+		// Color of Button
+		clearButton.setForeground(Color.blue);
+		leaveButton.setForeground(Color.blue);
+		brushButton.setForeground(Color.blue);
+		backgroundButton.setForeground(Color.blue);
+		colorButton1.setForeground(Color.blue);
+		colorButton2.setForeground(Color.blue);
+		sendButton.setForeground(Color.blue);
+		BrPx.setForeground(Color.blue);
 		cmb.setForeground(Color.blue);
 		BrSize.setForeground(Color.blue);
-        
-        //Bounds of mainFrame
-        mainFrame.pack();
-        mainFrame.setLocation(15, 25);
-        mainFrame.setBounds(new Rectangle(1000, 585));
-        
-        if(!noChannel && useState) {
-            channel.connect(groupName, null, stateTimeout);
-        }
-        mainFrame.setVisible(true);
+		groupLabel.setForeground(Color.blue);
+		joinButton.setForeground(Color.blue);
+
+		// Bounds of mainFrame
+		mainFrame.pack();
+		mainFrame.setLocation(15, 25);
+		mainFrame.setBounds(new Rectangle(1300, 595));
+
+		if (!noChannel && useState) {
+			channel.connect(groupName, null, stateTimeout);
+		}
+		mainFrame.setVisible(true);
     }
 
     /**
